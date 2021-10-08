@@ -1,14 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, View, FlatList, Text} from 'react-native';
+
+import Card from "./components/Card";
+import {pokes} from "./data/rest.js";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    const [data, setData] = useState(undefined);
+
+    pokes(100).then(res => {
+      setData(res);
+    }
+    );
+
+    if(!data){
+      return (
+        <View style={styles.container}>
+          <Text>Cargando datos</Text>
+          </View>
+      )
+    }else{
+      return (
+        <View style={styles.container}>
+          <FlatList
+            data={data}
+            renderItem={Card}
+            keyExtractor={item => item.id}
+            numColumns = {4}
+            style = {{with: '100%', flex: 1}}
+
+          />
+        </View>
+      )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -17,5 +41,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 70
   },
 });
