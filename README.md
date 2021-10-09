@@ -17,3 +17,4 @@ React-Native application to show pokemon from pokeapi.co.
 * Carousel.
 * Flipping cards.
 * Move the heavy processing to backend.
+* Responsive number of columns.
